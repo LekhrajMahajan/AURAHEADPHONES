@@ -2,8 +2,10 @@ import admin from 'firebase-admin';
 import { createRequire } from 'module';
 
 const require = createRequire(import.meta.url);
-
-const serviceAccount = require('./serviceAccountKey.json');
+// Check if we have the environment variable for production
+const serviceAccount = process.env.FIREBASE_SERVICE_ACCOUNT
+  ? JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT)
+  : require('./serviceAccountKey.json.json'); // Fallback to file for local dev
 
 if (!admin.apps.length) {
   admin.initializeApp({
