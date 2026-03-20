@@ -4,7 +4,7 @@ import {
   signInWithEmailAndPassword,
   sendEmailVerification,
   GoogleAuthProvider,
-  signInWithPopup
+  signInWithRedirect
 } from 'firebase/auth';
 import { auth } from '../config/firebase';
 import { syncUserWithBackend } from '../services/api';
@@ -81,24 +81,16 @@ const LoginPage = ({ setCurrentUser }) => {
     }
   };
 
-  // ── Google OAuth Login (Popup) ────────────────────────────
+  // ── Google OAuth Login (Redirect) ────────────────────────────
   const handleGoogleLogin = async () => {
     setGoogleLoading(true);
     setError('');
     try {
       const provider = new GoogleAuthProvider();
-      const result = await signInWithPopup(auth, provider);
-      const backendUser = await syncUserWithBackend(result.user);
-      setCurrentUser(backendUser);
-      showToastMsg(`Welcome, ${result.user.displayName}!`);
-      setTimeout(() => navigate('/shop'), 800);
+      // By using Redirect instead of Popup, we bypass ALL browser COOP restrictions
+      await signInWithRedirect(auth, provider);
     } catch (err) {
-      if (err.code === 'auth/popup-closed-by-user' || err.code === 'auth/cancelled-popup-request') {
-        // User closed the popup — no need to show error
-      } else {
-        setError('Google login failed. Please try again.');
-      }
-    } finally {
+      setError('Google login failed. Please try again.');
       setGoogleLoading(false);
     }
   };
