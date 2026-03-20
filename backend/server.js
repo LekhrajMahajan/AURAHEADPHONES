@@ -4,11 +4,11 @@ import cors from 'cors';
 import connectDB from './src/config/db.js';
 
 // Routes
-import authRoutes    from './src/modules/auth/auth.routes.js';
-import userRoutes    from './src/modules/user/user.routes.js';
+import authRoutes from './src/modules/auth/auth.routes.js';
+import userRoutes from './src/modules/user/user.routes.js';
 import productRoutes from './src/modules/product/product.routes.js';
-import orderRoutes   from './src/modules/order/order.routes.js';
-import aiRoutes      from './src/modules/ai/ai.routes.js';
+import orderRoutes from './src/modules/order/order.routes.js';
+import aiRoutes from './src/modules/ai/ai.routes.js';
 
 dotenv.config();
 connectDB();
@@ -17,11 +17,7 @@ const app = express();
 
 // ─── Middleware ───────────────────────────────────────────────
 app.use(cors({
-  origin: [
-    'http://localhost:5173',   
-    'http://localhost:3000',   
-    process.env.CLIENT_URL,    
-  ].filter(Boolean),
+  origin: true, // Allow any origin dynamically (prevents CORS errors on Render)
   credentials: true,
 }));
 
@@ -34,11 +30,11 @@ app.get('/', (req, res) => {
 });
 
 // ─── API Routes ───────────────────────────────────────────────
-app.use('/api/auth',     authRoutes);
-app.use('/api/users',    userRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
-app.use('/api/orders',   orderRoutes);
-app.use('/api/ai',       aiRoutes);
+app.use('/api/orders', orderRoutes);
+app.use('/api/ai', aiRoutes);
 
 // ─── 404 Handler ──────────────────────────────────────────────
 app.use((req, res) => {
@@ -56,5 +52,5 @@ app.use((err, req, res, next) => {
 // ─── Start Server ─────────────────────────────────────────────
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`Server running on http://localhost:${PORT}`);
 });
