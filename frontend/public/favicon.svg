@@ -1,0 +1,13 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Dark background with rounded corners -->
+  <rect width="512" height="512" rx="120" fill="#1A1A1A"/>
+  
+  <!-- Headphone Band -->
+  <path d="M140 280 C140 180 200 140 256 140 C312 140 372 180 372 280" fill="none" stroke="#EAE8E3" stroke-width="44" stroke-linecap="round"/>
+  
+  <!-- Left Ear Cup -->
+  <rect x="100" y="260" width="80" height="130" rx="40" fill="#EAE8E3"/>
+  
+  <!-- Right Ear Cup -->
+  <rect x="332" y="260" width="80" height="130" rx="40" fill="#EAE8E3"/>
+</svg>
