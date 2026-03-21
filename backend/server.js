@@ -1,3 +1,4 @@
+import './dns-fix.js';
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
@@ -17,7 +18,11 @@ const app = express();
 
 // ─── Middleware ───────────────────────────────────────────────
 app.use(cors({
-  origin: true, // Allow any origin dynamically (prevents CORS errors on Render)
+  origin: [
+    'http://localhost:5173',
+    'http://localhost:3000',
+    process.env.CLIENT_URL,
+  ].filter(Boolean),
   credentials: true,
 }));
 
