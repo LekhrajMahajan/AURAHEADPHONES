@@ -1,17 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ShoppingBag, Check, Plus, Search } from 'lucide-react';
+import { ShoppingBag, Check } from 'lucide-react';
 import ToastNotification from '../components/ToastNotification';
 
 const ShopPage = ({ currentUser, addToCart, products = [], searchQuery = '' }) => {
   const navigate = useNavigate();
 
-
-  const [addedId,     setAddedId]     = useState(null);
-  const [toastMessage,setToastMessage]= useState('');
-  const [showToast,   setShowToast]   = useState(false);
-
-
+  const [addedId, setAddedId] = useState(null);
+  const [toastMessage, setToastMessage] = useState('');
+  const [showToast, setShowToast] = useState(false);
 
   const handleAdd = (product, e) => {
     e.stopPropagation();
@@ -31,84 +28,49 @@ const ShopPage = ({ currentUser, addToCart, products = [], searchQuery = '' }) =
 
   return (
     <div className="min-h-screen bg-[#EAE8E3] pt-32 pb-32 animate-[fade-in_0.5s_ease-out]">
-      <div className="max-w-7xl mx-auto px-6 md:px-16">
-
-        {/* Shop Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 md:mb-24 gap-8">
-          <div className="min-h-[160px] md:min-h-[220px]">
-            {currentUser && (
-              <span className="text-[10px] md:text-xs font-semibold uppercase tracking-[0.2em] text-[#1A1A1A]/70 mb-4 block">
-                Welcome back, {currentUser.name}
-              </span>
-            )}
-            {searchQuery.trim() ? (
-              <div>
-                <h1 className="text-[3rem] md:text-[5rem] leading-[0.9] font-medium tracking-tighter text-[#1A1A1A]">
-                  Results for
-                </h1>
-                <h2 className="text-[2rem] md:text-[3.5rem] font-medium tracking-tighter text-[#1A1A1A]/70 leading-tight">
-                  "{searchQuery}"
-                </h2>
-              </div>
-            ) : (
-              <h1 className="text-[3.5rem] md:text-[6rem] lg:text-[7.5rem] leading-[0.9] font-medium tracking-tighter text-[#1A1A1A]">
-                The<br />Collection
-              </h1>
-            )}
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-[#D6D5D0] pb-8">
+          <div>
+            <h4 className="text-[10px] md:text-xs font-semibold tracking-[0.2em] uppercase text-gray-500 mb-4">
+              {currentUser ? `Welcome back, ${currentUser.name?.split(' ')[0] || 'Guest'}` : 'Our Lineup'}
+            </h4>
+            <h1 className="text-[3.5rem] md:text-[5rem] font-medium leading-[0.9] text-[#1A1A1A] tracking-tighter">
+              The<br />Collection
+            </h1>
           </div>
-          <p className="text-gray-700 text-lg md:text-xl font-light max-w-sm leading-relaxed">
-            {searchQuery.trim()
-              ? `${products.length} product${products.length !== 1 ? 's' : ''} found`
-              : 'Discover our meticulously curated lineup. Engineered for uncompromised acoustic excellence.'
-            }
-          </p>
+          <div className="text-gray-500 text-sm md:text-base font-light max-w-sm text-right mt-6 md:mt-0 leading-relaxed">
+            Discover our meticulously curated lineup. Engineered for uncompromised acoustic excellence.
+          </div>
         </div>
 
-        {searchQuery.trim() && products.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-32 bg-white rounded-[40px] shadow-sm border border-gray-100">
-            <Search className="w-16 h-16 text-gray-300 mb-6" strokeWidth={1} />
-            <h2 className="text-2xl font-medium text-[#1A1A1A] mb-3">No products found</h2>
-            <p className="text-gray-600 mb-2">No results for "<span className="font-semibold text-[#1A1A1A]">{searchQuery}</span>"</p>
-            <p className="text-gray-500 text-sm mb-8">Try searching with different keywords</p>
+        {products.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-32 text-gray-500">
+            <ShoppingBag className="w-16 h-16 mb-6 opacity-20" />
+            <p className="text-xl font-medium">No products found for "{searchQuery}"</p>
           </div>
         ) : (
-          /* Product Grid */
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
-            {products.map((product, index) => {
-              const productId = product._id || product.id;
-              const isAdded   = addedId === productId;
-
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+            {products.map((product) => {
+              const isAdded = addedId === (product._id || product.id);
               return (
                 <div
-                  key={productId}
-                  onClick={() => navigate(`/product/${productId}`)}
-                  className="group flex flex-col bg-white rounded-[30px] p-5 shadow-sm hover:shadow-2xl transition-shadow duration-500 border border-gray-100 cursor-pointer transform-gpu will-change-transform"
+                  key={product._id || product.id}
+                  onClick={() => navigate(`/product/${product._id || product.id}`)}
+                  className="group bg-white rounded-[30px] p-6 hover:shadow-[0_20px_50px_rgba(0,0,0,0.08)] hover:-translate-y-2 transition-all duration-500 flex flex-col h-[480px] cursor-pointer"
                 >
-                  {/* Image */}
-                  <div className="relative w-full aspect-square bg-[#F5F5F5] rounded-[20px] mb-6 overflow-hidden flex items-center justify-center p-6 transform-gpu">
+                  <div className="relative w-full h-[250px] bg-[#F5F5F5] rounded-[24px] mb-6 flex items-center justify-center p-6 overflow-hidden">
                     {product.tag && (
-                      <div className="absolute top-4 left-4 px-3 py-1.5 bg-[#1A1A1A] text-white text-[10px] uppercase tracking-widest font-semibold rounded-full z-10">
+                      <span className="absolute top-4 left-4 bg-[#1A1A1A] text-white text-[9px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full z-10">
                         {product.tag}
-                      </div>
+                      </span>
                     )}
                     <img
                       src={`/${product.img}`}
                       alt={product.name}
-                      {...(index < 4 ? { fetchpriority: "high" } : {})}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 transform-gpu will-change-transform"
+                      loading="lazy"
+                      className="w-full h-full object-cover mix-blend-multiply group-hover:scale-110 transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]"
                     />
-                    {/* Quick Add */}
-                    <div className="absolute bottom-6 right-6 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 transform-gpu">
-                      <button onClick={(e) => handleAdd(product, e)}
-                        aria-label={isAdded ? "Added to Cart" : "Add to Cart"}
-                        className="w-14 h-14 bg-[#1A1A1A] text-white rounded-full flex items-center justify-center hover:bg-[#333] shadow-lg transition-colors"
-                      >
-                        {isAdded ? <Check className="w-6 h-6 text-green-400" /> : <Plus className="w-6 h-6" />}
-                      </button>
-                    </div>
                   </div>
-
-                  {/* Info */}
                   <div className="flex flex-col flex-grow px-2">
                     <div className="flex justify-between items-start mb-6">
                       <div>
