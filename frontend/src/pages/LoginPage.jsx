@@ -74,7 +74,7 @@ const LoginPage = ({ setCurrentUser }) => {
       } else if (err.code === 'auth/user-disabled') {
         setError('This account has been disabled. Contact support.');
       } else {
-        setError('Something went wrong. Please try again.');
+        setError(err.message || 'Something went wrong. Please try again.');
       }
     } finally {
       setLoading(false);
