@@ -1,6 +1,6 @@
 import { auth } from '../config/firebase';
 
-const BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const BASE = import.meta.env.VITE_API_URL || 'https://auraheadphones.onrender.com/api';
 
 const waitForAuthUser = () => {
   return new Promise((resolve, reject) => {
@@ -46,12 +46,12 @@ export const syncUserWithBackend = async (firebaseUser) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization:  `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       firebaseUid: firebaseUser.uid,
-      name:        firebaseUser.displayName || 'Aura User',
-      email:       firebaseUser.email,
+      name: firebaseUser.displayName || 'Aura User',
+      email: firebaseUser.email,
     }),
   });
   if (!res.ok) {
