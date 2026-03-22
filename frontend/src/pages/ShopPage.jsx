@@ -65,7 +65,7 @@ const ShopPage = ({ currentUser, addToCart, products = [], searchQuery = '' }) =
                       </span>
                     )}
                     <img
-                      src={`/${product.img}`}
+                      src={product.img?.startsWith('http') ? product.img : `/${product.img}`}
                       alt={product.name}
                       loading="lazy"
                       className="w-full h-full object-cover mix-blend-multiply group-hover:scale-110 transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]"

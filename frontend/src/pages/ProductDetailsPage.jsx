@@ -101,7 +101,7 @@ const ProductDetailsPage = ({ currentUser, addToCart, products = [] }) => {
               </div>
             )}
             <img
-              src={`/${product.img}`}
+              src={product.img?.startsWith('http') ? product.img : `/${product.img}`}
               alt={product.name}
               loading="eager"
               decoding="sync"

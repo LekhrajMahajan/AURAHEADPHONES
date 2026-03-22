@@ -151,7 +151,7 @@ const OrderPage = () => {
                       >
                         <div className="w-20 h-20 bg-white rounded-[20px] p-2 flex-shrink-0 shadow-sm">
                           <img
-                            src={`/${item.img}`}
+                            src={item.img?.startsWith('http') ? item.img : `/${item.img}`}
                             alt={item.name}
                             className="w-full h-full object-contain mix-blend-multiply"
                           />

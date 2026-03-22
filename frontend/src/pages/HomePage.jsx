@@ -489,7 +489,7 @@ const HomePage = ({ products = [] }) => {
                 {plannerResult.matchedProduct && (
                   <div className="w-full md:w-48 h-48 bg-[#F5F5F5] rounded-[24px] flex items-center justify-center p-6 flex-shrink-0 mx-auto md:mx-0">
                     <img
-                      src={`/${plannerResult.matchedProduct.img}`}
+                      src={plannerResult.matchedProduct.img?.startsWith('http') ? plannerResult.matchedProduct.img : `/${plannerResult.matchedProduct.img}`}
                       alt={plannerResult.modelRecommendation}
                       className="w-full h-full object-cover mix-blend-multiply"
                     />

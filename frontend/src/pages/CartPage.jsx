@@ -87,7 +87,7 @@ const CartPage = ({ cartItems, updateQuantity, removeItem }) => {
                     {/* Product Image */}
                     <div className="w-28 h-28 bg-[#F5F5F5] rounded-[18px] p-3 flex-shrink-0 flex items-center justify-center">
                       <img
-                        src={`/${item.img}`}
+                        src={item.img?.startsWith('http') ? item.img : `/${item.img}`}
                         alt={item.name}
                         className="w-full h-full object-cover mix-blend-multiply"
                       />

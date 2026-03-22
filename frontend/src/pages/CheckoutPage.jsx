@@ -393,7 +393,7 @@ const CheckoutPage = ({ cartItems, onOrderComplete }) => {
                   return (
                     <div key={itemId} className="flex gap-4 items-center">
                       <div className="w-16 h-16 bg-[#F5F5F5] rounded-2xl p-2 flex-shrink-0">
-                        <img src={`/${item.img}`} alt={item.name} className="w-full h-full object-contain mix-blend-multiply" />
+                        <img src={item.img?.startsWith('http') ? item.img : `/${item.img}`} alt={item.name} className="w-full h-full object-contain mix-blend-multiply" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <h4 className="text-sm font-medium truncate">{item.name}</h4>
