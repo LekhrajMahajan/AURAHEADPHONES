@@ -1,6 +1,9 @@
 import './dns-fix.js';
-import express from 'express';
+// ⚠️ dotenv MUST be configured before any other module that reads process.env
 import dotenv from 'dotenv';
+dotenv.config();
+
+import express from 'express';
 import cors from 'cors';
 import connectDB from './src/config/db.js';
 
@@ -11,7 +14,6 @@ import productRoutes from './src/modules/product/product.routes.js';
 import orderRoutes from './src/modules/order/order.routes.js';
 import aiRoutes from './src/modules/ai/ai.routes.js';
 
-dotenv.config();
 connectDB();
 
 const app = express();
