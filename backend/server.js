@@ -1,5 +1,4 @@
 import './dns-fix.js';
-// ⚠️ dotenv MUST be configured before any other module that reads process.env
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -19,13 +18,26 @@ connectDB();
 const app = express();
 
 // ─── Middleware ───────────────────────────────────────────────
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'https://auraheadphones.vercel.app',
+  process.env.CLIENT_URL,
+].filter(Boolean);
+
 app.use(cors({
-  origin: [
-    'http://localhost:5173',
-    'http://localhost:3000',
-    'https://auraheadphones.vercel.app',
-    process.env.CLIENT_URL,
-  ].filter(Boolean),
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    // Allow any localhost, any exact match in allowedOrigins, or any Vercel preview URL for the project
+    if (
+      allowedOrigins.includes(origin) ||
+      /^https:\/\/auraheadphones.*\.vercel\.app$/.test(origin)
+    ) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
 }));
 
