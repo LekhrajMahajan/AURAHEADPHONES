@@ -95,8 +95,10 @@ const LoginPage = ({ setCurrentUser }) => {
     } catch (err) {
       if (err.code === 'auth/popup-closed-by-user' || err.code === 'auth/cancelled-popup-request') {
         // User closed the popup — no need to show error
+      } else if (err.code === 'auth/unauthorized-domain') {
+        setError('Firebase Error: Domain not authorized. You must add this Vercel URL to your Firebase Console -> Authentication -> Settings -> Authorized Domains list.');
       } else {
-        setError('Google login failed. Please try again.');
+        setError(err.message || 'Google login failed. Please try again.');
       }
     } finally {
       setGoogleLoading(false);
