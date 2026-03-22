@@ -1,44 +1,53 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Headphones, ShoppingBag, Activity, Plus, Minus, Sparkles, Loader2, X, CheckCircle2 } from 'lucide-react';
-import useScrollSmoother from '../utils/useScrollSmoother';
 import { auth } from '../config/firebase';
 
 // ============================================================================
 // PRODUCT DATA — price as number, Indian format
 // ============================================================================
 const PRODUCTS = [
-  { id: 1,  name: 'Aura Pro Studio',     color: 'Ivory White',     price: 3490, img: 'image8.jpg',  tag: 'Bestseller' },
-  { id: 2,  name: 'Aura Elite ANC',      color: 'Obsidian Black',  price: 3990, img: 'image9.jpg',  tag: 'New'        },
-  { id: 3,  name: 'Aura Lite Wireless',  color: 'Rose Quartz',     price: 1990, img: 'image3.jpg',  tag: null         },
-  { id: 4,  name: 'Aura Play Gaming',    color: 'Stealth Black',   price: 2490, img: 'image4.jpg',  tag: null         },
-  { id: 5,  name: 'Aura Classic',        color: 'Pearl White',     price: 2990, img: 'image6.png',  tag: null         },
-  { id: 6,  name: 'Aura Command X',      color: 'Carbon Chrome',   price: 4490, img: 'image2.jpg',  tag: 'Premium'    },
-  { id: 7,  name: 'Aura DJ Master',      color: 'Platinum Silver', price: 3290, img: 'image7.jpg',  tag: null         },
-  { id: 8,  name: 'Aura Air Minimalist', color: 'Bone White',      price: 1790, img: 'image5.jpg',  tag: null         },
+  { id: 1, name: 'Aura Pro Studio', color: 'Ivory White', price: 3490, img: 'image8.jpg', tag: 'Bestseller' },
+  { id: 2, name: 'Aura Elite ANC', color: 'Obsidian Black', price: 3990, img: 'image9.jpg', tag: 'New' },
+  { id: 3, name: 'Aura Lite Wireless', color: 'Rose Quartz', price: 1990, img: 'image3.jpg', tag: null },
+  { id: 4, name: 'Aura Play Gaming', color: 'Stealth Black', price: 2490, img: 'image4.jpg', tag: null },
+  { id: 5, name: 'Aura Classic', color: 'Pearl White', price: 2990, img: 'image6.png', tag: null },
+  { id: 6, name: 'Aura Command X', color: 'Carbon Chrome', price: 4490, img: 'image2.jpg', tag: 'Premium' },
+  { id: 7, name: 'Aura DJ Master', color: 'Platinum Silver', price: 3290, img: 'image7.jpg', tag: null },
+  { id: 8, name: 'Aura Air Minimalist', color: 'Bone White', price: 1790, img: 'image5.jpg', tag: null },
 ];
 
 const ACCORDION_DATA = [
-  { id: 'anc',       title: 'Absolute Silence',     content: 'Our proprietary Active Noise Cancellation adapts to your environment 100,000 times per second. Whether you are on a roaring flight or in a bustling cafe, experience nothing but pure, unadulterated sound.',                                                                                                img: 'image9.jpg' },
-  { id: 'battery',   title: 'Endless Playback',      content: 'Engineered for the long haul. A single charge delivers up to 60 hours of high-fidelity listening. Need a quick boost? Just 5 minutes of charging provides 5 hours of continuous playback.',                                                                                                               img: 'image7.jpg' },
-  { id: 'materials', title: 'Premium Craftsmanship', content: 'Wrapped in ultra-soft memory foam and finished with aerospace-grade brushed aluminum. The ergonomic chassis distributes weight perfectly, ensuring you forget you are even wearing them.',                                                                                                               img: 'image2.jpg' },
-  { id: 'lifestyle', title: 'Expressive Design',     content: 'Sound that matches your style. Available in a spectrum of meticulously curated colorways designed to make a statement while seamlessly integrating into your daily aesthetic.',                                                                                                                          img: 'image3.jpg' },
+  { id: 'anc', title: 'Absolute Silence', content: 'Our proprietary Active Noise Cancellation adapts to your environment 100,000 times per second. Whether you are on a roaring flight or in a bustling cafe, experience nothing but pure, unadulterated sound.', img: 'image9.jpg' },
+  { id: 'battery', title: 'Endless Playback', content: 'Engineered for the long haul. A single charge delivers up to 60 hours of high-fidelity listening. Need a quick boost? Just 5 minutes of charging provides 5 hours of continuous playback.', img: 'image7.jpg' },
+  { id: 'materials', title: 'Premium Craftsmanship', content: 'Wrapped in ultra-soft memory foam and finished with aerospace-grade brushed aluminum. The ergonomic chassis distributes weight perfectly, ensuring you forget you are even wearing them.', img: 'image2.jpg' },
+  { id: 'lifestyle', title: 'Expressive Design', content: 'Sound that matches your style. Available in a spectrum of meticulously curated colorways designed to make a statement while seamlessly integrating into your daily aesthetic.', img: 'image3.jpg' },
 ];
 
 // ============================================================================
 // SUB-COMPONENTS
 // ============================================================================
 
-const AnimatedEqualizer = ({ scrollYRef }) => {
-  const scrollY = scrollYRef?.current || 0;
+const AnimatedEqualizer = () => {
   return (
     <div className="w-24 md:w-32 h-[350px] md:h-[450px] border-4 border-white/60 rounded-[100px] p-6 flex items-end justify-center gap-2 relative shadow-lg bg-[#EAE8E3]/50 backdrop-blur-sm overflow-hidden">
-      {[1, 2, 3, 4, 5].map((bar) => {
-        const height = 20 + ((Math.sin(scrollY * 0.01 + bar) + 1) * 35);
-        return (
-          <div key={bar} className="w-full bg-[#1A1A1A]/80 rounded-t-full rounded-b-sm transition-all duration-100 ease-out" style={{ height: `${height}%` }} />
-        );
-      })}
+      {[1, 2, 3, 4, 5].map((bar) => (
+        <div
+          key={bar}
+          className="w-full bg-[#1A1A1A]/80 rounded-t-full rounded-b-sm"
+          style={{
+            height: '40%',
+            animation: `eq-bar-${bar} ${1.2 + bar * 0.18}s ease-in-out infinite alternate`,
+          }}
+        />
+      ))}
+      <style>{`
+        @keyframes eq-bar-1 { from { height: 20% } to { height: 80% } }
+        @keyframes eq-bar-2 { from { height: 35% } to { height: 65% } }
+        @keyframes eq-bar-3 { from { height: 55% } to { height: 90% } }
+        @keyframes eq-bar-4 { from { height: 25% } to { height: 70% } }
+        @keyframes eq-bar-5 { from { height: 15% } to { height: 60% } }
+      `}</style>
       <div className="absolute top-8 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full border-[3px] border-[#1A1A1A]/20 flex items-center justify-center">
         <Activity className="w-4 h-4 text-[#1A1A1A]/50" />
       </div>
@@ -48,7 +57,7 @@ const AnimatedEqualizer = ({ scrollYRef }) => {
 
 const FeatureAccordion = ({ activeItem, setActiveItem }) => {
   const [internalActive, setInternalActive] = useState('anc');
-  const active    = activeItem    !== undefined ? activeItem    : internalActive;
+  const active = activeItem !== undefined ? activeItem : internalActive;
   const setActive = setActiveItem !== undefined ? setActiveItem : setInternalActive;
 
   const activeData = ACCORDION_DATA.find(item => item.id === active) || ACCORDION_DATA[0];
@@ -87,11 +96,14 @@ const FeatureAccordion = ({ activeItem, setActiveItem }) => {
 // ============================================================================
 // MAIN HOME PAGE
 // ============================================================================
-const HomePage = () => {
+const HomePage = ({ products = [] }) => {
   const navigate = useNavigate();
-  useScrollSmoother();
-  const scrollYRef = useRef(0);
-  const [localScrollY, setLocalScrollY] = useState(0);
+
+  // Refs for imperative parallax 
+  const heroImgRef = useRef(null);
+  const heroTextLRef = useRef(null);
+  const heroTextRRef = useRef(null);
+  const parallaxImgRef = useRef(null);
 
   // AI Modal States
   const [isPlannerOpen, setIsPlannerOpen] = useState(false);
@@ -110,19 +122,32 @@ const HomePage = () => {
     setTimeout(() => setToast({ show: false, message: '' }), 3000);
   };
 
+  // Imperative scroll handler — mutates DOM directly, zero React re-renders
   useEffect(() => {
     let rafId;
-    let lastUpdate = 0;
     const handleScroll = () => {
-      scrollYRef.current = window.scrollY;
-      const now = Date.now();
-      if (now - lastUpdate > 16) {
-        lastUpdate = now;
-        rafId = requestAnimationFrame(() => setLocalScrollY(scrollYRef.current));
-      }
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        const y = window.scrollY;
+        if (heroImgRef.current) {
+          heroImgRef.current.style.transform = `scale(${1 + y * 0.001}) translateY(${y * 0.08}px)`;
+        }
+        if (heroTextLRef.current) {
+          heroTextLRef.current.style.transform = `translateY(${y * -0.05}px)`;
+        }
+        if (heroTextRRef.current) {
+          heroTextRRef.current.style.transform = `translateY(${y * -0.05}px)`;
+        }
+        if (parallaxImgRef.current) {
+          parallaxImgRef.current.style.transform = `translateY(${(y - 1500) * 0.15}px)`;
+        }
+      });
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => { window.removeEventListener('scroll', handleScroll); if (rafId) cancelAnimationFrame(rafId); };
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      cancelAnimationFrame(rafId);
+    };
   }, []);
 
   const handleAIConcierge = async () => {
@@ -146,7 +171,7 @@ const HomePage = () => {
         {
           method: 'POST',
           headers: {
-            'Content-Type':  'application/json',
+            'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`,
           },
           body: JSON.stringify({ prompt: plannerPrompt }),
@@ -157,9 +182,9 @@ const HomePage = () => {
 
       const result = await response.json();
 
-      const matchedProduct = PRODUCTS.find(p =>
+      const matchedProduct = products.find(p =>
         p.name.toLowerCase() === result.modelRecommendation?.toLowerCase()
-      ) || PRODUCTS[0];
+      ) || products[0] || PRODUCTS[0];
 
       setPlannerResult({ ...result, matchedProduct });
 
@@ -174,7 +199,8 @@ const HomePage = () => {
   return (
     <div className="animate-[fade-in_0.5s_ease-out]">
 
-      <style dangerouslySetInnerHTML={{ __html: `
+      <style dangerouslySetInnerHTML={{
+        __html: `
         @keyframes marquee { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); } }
         .animate-marquee { display: flex; flex-direction: row; width: fit-content; animation: marquee 35s linear infinite; }
         .animate-marquee:hover { animation-play-state: paused; }
@@ -186,7 +212,7 @@ const HomePage = () => {
       <section className="relative bg-[#EAE8E3] pt-32 md:pt-0 min-h-[100svh] flex items-center overflow-hidden">
         <div className="w-full max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-between z-10 py-12 md:py-0">
 
-          <div className="w-full md:w-1/3 flex flex-col items-center md:items-start text-center md:text-left mb-12 md:mb-0 order-2 md:order-1 min-h-[180px] md:min-h-[240px]" style={{ transform: `translateY(${localScrollY * -0.05}px)` }}>
+          <div ref={heroTextLRef} className="w-full md:w-1/3 flex flex-col items-center md:items-start text-center md:text-left mb-12 md:mb-0 order-2 md:order-1 min-h-[180px] md:min-h-[240px]">
             <h1 className="text-[3.5rem] md:text-[4.5rem] lg:text-[5.5rem] font-medium leading-[1] mb-6 text-[#1A1A1A] tracking-tight">
               Aura Pro<br />Studio
             </h1>
@@ -196,13 +222,12 @@ const HomePage = () => {
           </div>
 
           <div className="w-full md:w-1/3 flex justify-center items-center relative h-[40vh] md:h-[70vh] order-1 md:order-2 mb-12 md:mb-0">
-            <img src="image1.png" alt="Aura Pro Studio Headphones"
-              className="w-[110%] md:w-[140%] max-w-none h-auto object-contain mix-blend-multiply drop-shadow-2xl"
-              style={{ transform: `scale(${1 + localScrollY * 0.001}) translateY(${localScrollY * 0.08}px)` }}
+            <img ref={heroImgRef} src="image1.png" alt="Aura Pro Studio Headphones"
+              className="w-[110%] md:w-[140%] max-w-none h-auto object-contain mix-blend-multiply drop-shadow-2xl will-change-transform"
             />
           </div>
 
-          <div className="w-full md:w-1/3 flex flex-col items-center md:items-end text-center md:text-right mt-4 md:mt-0 order-3" style={{ transform: `translateY(${localScrollY * -0.05}px)` }}>
+          <div ref={heroTextRRef} className="w-full md:w-1/3 flex flex-col items-center md:items-end text-center md:text-right mt-4 md:mt-0 order-3">
             <div className="inline-block px-5 py-2 bg-[#1A1A1A] text-white text-[10px] md:text-xs uppercase tracking-widest font-semibold rounded-full mb-8 shadow-md">Bestseller</div>
             <ul className="space-y-4 mb-10 text-gray-700 text-sm md:text-base font-medium w-full md:w-auto">
               {['Adaptive Noise Cancellation', '60-Hour Battery Life', 'Lossless Bluetooth 5.3', 'Ultra-Soft Memory Foam'].map(f => (
@@ -275,24 +300,24 @@ const HomePage = () => {
         <div className="max-w-7xl mx-auto relative flex flex-col">
           <div className="relative z-20 mb-10 md:mb-0">
             <h2 className="text-[4rem] md:text-[8.5rem] lg:text-[11rem] leading-[0.85] font-medium tracking-tighter text-[#1A1A1A]">
-              Elevate Your<br/>Sound
+              Elevate Your<br />Sound
             </h2>
           </div>
 
           <div className="relative w-full flex justify-center mt-0 md:-mt-[10%] mb-20 md:mb-32 z-10 pointer-events-none">
             <img
+              ref={parallaxImgRef}
               src="image8.jpg"
               alt="Aura Headphones Front View"
               loading="lazy"
               decoding="async"
-              className="w-[120%] md:w-[90%] max-w-4xl h-auto object-cover rounded-[30px] md:rounded-[50px] mix-blend-multiply"
-              style={{ transform: `translateY(${(localScrollY - 1500) * 0.15}px)` }}
+              className="w-[120%] md:w-[90%] max-w-4xl h-auto object-cover rounded-[30px] md:rounded-[50px] mix-blend-multiply will-change-transform"
             />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-end pb-12 border-b border-[#D6D5D0]">
             <div className="md:col-span-5">
-              <h3 className="text-3xl md:text-5xl font-medium leading-tight text-[#1A1A1A]">Invest in<br/>Acoustic<br/>Brilliance</h3>
+              <h3 className="text-3xl md:text-5xl font-medium leading-tight text-[#1A1A1A]">Invest in<br />Acoustic<br />Brilliance</h3>
             </div>
             <div className="md:col-span-7 flex justify-between text-xs md:text-sm font-semibold tracking-[0.2em] uppercase text-gray-500 w-full">
               <div>AURA AUDIO</div>
@@ -311,12 +336,12 @@ const HomePage = () => {
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 md:gap-32 relative">
           <div className="lg:w-5/12">
             <div className="lg:sticky lg:top-32 h-[50vh] md:h-[70vh] flex items-center justify-center bg-[#DFDDD7] rounded-[40px] md:rounded-[60px] p-8">
-              <AnimatedEqualizer scrollYRef={scrollYRef} />
+              <AnimatedEqualizer />
             </div>
           </div>
 
           <div className="lg:w-7/12 flex flex-col justify-center">
-            <h2 className="text-[2.5rem] md:text-[4rem] font-medium mb-12 leading-[1.1]">High-Fidelity<br/>Architecture</h2>
+            <h2 className="text-[2.5rem] md:text-[4rem] font-medium mb-12 leading-[1.1]">High-Fidelity<br />Architecture</h2>
             <h4 className="text-[10px] md:text-xs font-semibold tracking-[0.2em] uppercase mb-8 text-gray-500">Direct Access to Pure Sound</h4>
             <p className="text-xl md:text-[1.7rem] leading-relaxed mb-16 font-light text-[#1A1A1A]">
               A true time-stopping machine. It brings the recording studio directly to your ears, revealing textures and layers in your music that standard drivers simply cannot reproduce.
@@ -384,7 +409,7 @@ const HomePage = () => {
             </div>
 
             <div className="bg-[#1A1A1A] text-white border border-white/10 p-10 md:p-14 max-w-sm rounded-[30px] shadow-2xl md:-translate-y-10">
-              <h3 className="text-6xl md:text-[5rem] font-medium tracking-tighter mb-6 leading-none">10K+<br/>Reviews</h3>
+              <h3 className="text-6xl md:text-[5rem] font-medium tracking-tighter mb-6 leading-none">10K+<br />Reviews</h3>
               <div className="w-12 h-[2px] bg-white/20 mb-8"></div>
               <div className="text-[10px] md:text-xs font-semibold uppercase tracking-[0.2em] text-gray-400 mb-8 border-b border-white/10 pb-6">Five Star Ratings</div>
               <p className="text-sm md:text-base leading-relaxed text-gray-400 font-light">
@@ -512,7 +537,7 @@ const HomePage = () => {
                 <button
                   onClick={() => {
                     setIsPlannerOpen(false);
-                    navigate(`/product/${plannerResult.matchedProduct?.id || ''}`);
+                    navigate(`/product/${plannerResult.matchedProduct?._id || plannerResult.matchedProduct?.id || ''}`);
                   }}
                   className="px-8 py-4 rounded-full bg-[#1A1A1A] text-white hover:bg-[#333] transition-colors font-medium flex items-center justify-center gap-3 text-base shadow-xl"
                 >
@@ -525,9 +550,8 @@ const HomePage = () => {
       </div>
 
       {/* ── TOAST NOTIFICATION ───────────────────────────────────── */}
-      <div className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-[200] flex items-center gap-3 bg-[#1A1A1A] text-white px-6 py-4 rounded-2xl shadow-2xl border border-white/10 transition-all duration-500 ${
-        toast.show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
-      }`}>
+      <div className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-[200] flex items-center gap-3 bg-[#1A1A1A] text-white px-6 py-4 rounded-2xl shadow-2xl border border-white/10 transition-all duration-500 ${toast.show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
+        }`}>
         <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0" />
         <p className="text-sm font-medium">{toast.message}</p>
       </div>
