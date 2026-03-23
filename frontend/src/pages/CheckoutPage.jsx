@@ -163,7 +163,7 @@ const CheckoutPage = ({ cartItems, onOrderComplete }) => {
 
           {/* ── Left: Checkout Form ── */}
           <div className="lg:col-span-7">
-            <h1 className="text-5xl font-medium tracking-tighter text-[#1A1A1A] mb-12">Checkout</h1>
+            <h1 className="text-4xl md:text-5xl font-medium tracking-tighter text-[#1A1A1A] mb-8 md:mb-12">Checkout</h1>
 
             {orderError && (
               <div className="bg-red-50 text-red-500 p-4 rounded-2xl mb-8 text-sm font-medium">
@@ -178,18 +178,18 @@ const CheckoutPage = ({ cartItems, onOrderComplete }) => {
                 <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-6">
                   Shipping Address
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                   <input ref={fullNameRef} type="text" placeholder="Full Name" required
-                    className="bg-white border-none rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-[#1A1A1A] transition-all" />
+                    className="bg-white border-none rounded-2xl px-4 py-3.5 md:px-6 md:py-4 outline-none focus:ring-2 focus:ring-[#1A1A1A] transition-all" />
                   <input ref={emailRef} type="email" placeholder="Email Address" required
-                    className="bg-white border-none rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-[#1A1A1A] transition-all" />
+                    className="bg-white border-none rounded-2xl px-4 py-3.5 md:px-6 md:py-4 outline-none focus:ring-2 focus:ring-[#1A1A1A] transition-all" />
                   <input ref={streetRef} type="text" placeholder="Street Address" required
-                    className="md:col-span-2 bg-white border-none rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-[#1A1A1A] transition-all" />
+                    className="md:col-span-2 bg-white border-none rounded-2xl px-4 py-3.5 md:px-6 md:py-4 outline-none focus:ring-2 focus:ring-[#1A1A1A] transition-all" />
                   <input ref={cityRef} type="text" placeholder="City" required
-                    className="bg-white border-none rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-[#1A1A1A] transition-all" />
+                    className="bg-white border-none rounded-2xl px-4 py-3.5 md:px-6 md:py-4 outline-none focus:ring-2 focus:ring-[#1A1A1A] transition-all" />
                   <input ref={pincodeRef} type="text" placeholder="PIN Code" required
                     maxLength={6} pattern="\d{6}"
-                    className="bg-white border-none rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-[#1A1A1A] transition-all" />
+                    className="bg-white border-none rounded-2xl px-4 py-3.5 md:px-6 md:py-4 outline-none focus:ring-2 focus:ring-[#1A1A1A] transition-all" />
                 </div>
               </section>
 
@@ -205,15 +205,15 @@ const CheckoutPage = ({ cartItems, onOrderComplete }) => {
                     { value: 'cod',  label: 'Cash on Delivery',             icon: Truck      },
                   ].map(({ value, label, icon: Icon }) => (
                     <label key={value}
-                      className={`flex items-center justify-between p-6 rounded-3xl border-2 transition-all cursor-pointer ${
+                      className={`flex items-center justify-between p-4 md:p-6 rounded-2xl md:rounded-3xl border-2 transition-all cursor-pointer ${
                         paymentMethod === value ? 'border-[#1A1A1A] bg-white' : 'border-transparent bg-white/50 hover:bg-white'
                       }`}
                     >
-                      <div className="flex items-center gap-4">
-                        <div className={`p-3 rounded-full ${paymentMethod === value ? 'bg-[#1A1A1A] text-white' : 'bg-gray-200 text-gray-500'}`}>
-                          <Icon className="w-5 h-5" />
+                      <div className="flex items-center gap-3 md:gap-4">
+                        <div className={`p-2.5 md:p-3 rounded-full ${paymentMethod === value ? 'bg-[#1A1A1A] text-white' : 'bg-gray-200 text-gray-500'}`}>
+                          <Icon className="w-4 h-4 md:w-5 md:h-5" />
                         </div>
-                        <span className="font-medium">{label}</span>
+                        <span className="font-medium text-sm md:text-base">{label}</span>
                       </div>
                       <input type="radio" name="payment" value={value}
                         checked={paymentMethod === value}
@@ -227,7 +227,7 @@ const CheckoutPage = ({ cartItems, onOrderComplete }) => {
 
               {/* Card Input Section */}
               {paymentMethod === 'card' && (
-                <div className="bg-white p-8 rounded-[30px] space-y-6 animate-[fade-in_0.3s_ease-out] border border-gray-100 shadow-sm">
+                <div className="bg-white p-5 md:p-8 rounded-[20px] md:rounded-[30px] space-y-4 md:space-y-6 animate-[fade-in_0.3s_ease-out] border border-gray-100 shadow-sm">
 
                   {/* Card preview strip */}
                   <div className="bg-gradient-to-r from-[#1A1A1A] to-[#333] rounded-2xl p-5 text-white flex justify-between items-center mb-2">

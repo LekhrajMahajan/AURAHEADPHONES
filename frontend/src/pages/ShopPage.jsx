@@ -50,18 +50,18 @@ const ShopPage = ({ currentUser, addToCart, products = [], searchQuery = '' }) =
             <p className="text-xl font-medium">No products found for "{searchQuery}"</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
             {products.map((product) => {
               const isAdded = addedId === (product._id || product.id);
               return (
                 <div
                   key={product._id || product.id}
                   onClick={() => navigate(`/product/${product._id || product.id}`)}
-                  className="group bg-white rounded-[30px] p-6 hover:shadow-[0_20px_50px_rgba(0,0,0,0.08)] hover:-translate-y-2 transition-all duration-500 flex flex-col h-[480px] cursor-pointer"
+                  className="group bg-white rounded-[20px] md:rounded-[30px] p-4 md:p-6 hover:shadow-[0_20px_50px_rgba(0,0,0,0.08)] hover:-translate-y-2 transition-all duration-500 flex flex-col h-auto md:h-[480px] cursor-pointer"
                 >
-                  <div className="relative w-full h-[250px] bg-[#F5F5F5] rounded-[24px] mb-6 flex items-center justify-center p-6 overflow-hidden">
+                  <div className="relative w-full aspect-square md:aspect-auto md:h-[250px] bg-[#F5F5F5] rounded-[16px] md:rounded-[24px] mb-4 md:mb-6 flex items-center justify-center p-3 md:p-6 overflow-hidden">
                     {product.tag && (
-                      <span className="absolute top-4 left-4 bg-[#1A1A1A] text-white text-[9px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full z-10">
+                      <span className="absolute top-3 left-3 md:top-4 md:left-4 bg-[#1A1A1A] text-white text-[8px] md:text-[9px] font-bold uppercase tracking-widest px-2 py-1 md:px-3 md:py-1.5 rounded-full z-10">
                         {product.tag}
                       </span>
                     )}
@@ -73,21 +73,21 @@ const ShopPage = ({ currentUser, addToCart, products = [], searchQuery = '' }) =
                       className="w-full h-full object-cover mix-blend-multiply group-hover:scale-110 transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]"
                     />
                   </div>
-                  <div className="flex flex-col flex-grow px-2">
-                    <div className="flex justify-between items-start mb-6">
+                  <div className="flex flex-col flex-grow px-1 md:px-2">
+                    <div className="flex flex-col justify-start items-start mb-4 md:mb-6 gap-2">
                       <div>
-                        <h3 className="text-xl font-medium text-[#1A1A1A] mb-1.5">{product.name}</h3>
-                        <p className="text-gray-500 uppercase tracking-widest text-[10px] font-semibold">{product.color}</p>
+                        <h3 className="text-sm md:text-xl font-medium text-[#1A1A1A] mb-1 md:mb-1.5 truncate w-full">{product.name}</h3>
+                        <p className="text-gray-500 uppercase tracking-widest text-[8px] md:text-[10px] font-semibold">{product.color}</p>
                       </div>
-                      <div className="text-lg font-medium text-[#1A1A1A]">
+                      <div className="text-sm md:text-lg font-medium text-[#1A1A1A]">
                         {typeof product.price === 'number' ? `₹${product.price.toLocaleString('en-IN')}` : product.price}
                       </div>
                     </div>
                     <div className="mt-auto">
                       <button onClick={(e) => handleAdd(product, e)}
-                        className="w-full py-3.5 bg-[#1A1A1A] text-white rounded-full flex items-center justify-center gap-2 hover:bg-[#333] transition-colors text-[11px] font-semibold uppercase tracking-widest"
+                        className="w-full py-2.5 md:py-3.5 bg-[#1A1A1A] text-white rounded-full flex items-center justify-center gap-1.5 md:gap-2 hover:bg-[#333] transition-colors text-[9px] md:text-[11px] font-semibold uppercase tracking-widest"
                       >
-                        {isAdded ? <><Check className="w-4 h-4 text-green-400" /> Added</> : <><ShoppingBag className="w-4 h-4" /> Add to Cart</>}
+                        {isAdded ? <><Check className="w-3 h-3 md:w-4 md:h-4 text-green-400" /> Added</> : <><ShoppingBag className="w-3 h-3 md:w-4 md:h-4" /> Add to Cart</>}
                       </button>
                     </div>
                   </div>

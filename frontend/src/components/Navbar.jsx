@@ -15,7 +15,7 @@ const Navbar = ({ cartCount = 0, currentUser, handleLogout, products = [], onSea
   const requestRef = useRef(null);
 
   const isScrolled   = localScrollY > 50;
-  const navLinkClass = "text-sm font-bold uppercase tracking-widest hover:text-gray-500 transition-colors flex items-center gap-2 cursor-pointer";
+  const navLinkClass = "text-[10px] md:text-sm font-bold uppercase tracking-[0.1em] md:tracking-widest hover:text-gray-500 transition-colors flex items-center gap-1.5 md:gap-2 cursor-pointer";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -95,19 +95,19 @@ const Navbar = ({ cartCount = 0, currentUser, handleLogout, products = [], onSea
 
   return (
     <>
-      <header className={`fixed top-0 left-0 right-0 z-[100] px-6 py-6 md:px-12 flex justify-between items-center transition-all duration-300 ${
-        isScrolled ? 'bg-[#EAE8E3]/95 backdrop-blur-md shadow-sm py-4 md:py-4' : 'bg-transparent'
+      <header className={`fixed top-0 left-0 right-0 z-[100] px-4 py-4 md:px-12 md:py-6 flex justify-between items-center transition-all duration-300 ${
+        isScrolled ? 'bg-[#EAE8E3]/95 backdrop-blur-md shadow-sm py-3 md:py-4' : 'bg-transparent'
       }`}>
 
         {/* Logo */}
-        <div className="text-[#1A1A1A] z-10">
+        <div className={`text-[#1A1A1A] z-10 transition-opacity ${searchOpen ? 'opacity-0 md:opacity-100 pointer-events-none md:pointer-events-auto' : 'opacity-100'}`}>
           <Link to="/" onClick={closeSearch} className="text-2xl font-bold tracking-[0.2em] uppercase hover:opacity-80 transition-opacity">
             AURA
           </Link>
         </div>
 
         {/* ✅ Animated Search Bar */}
-        <div className={`absolute left-0 right-0 px-6 md:px-12 transition-all duration-500 ease-in-out ${
+        <div className={`absolute left-0 right-0 px-4 md:px-12 transition-all duration-500 ease-in-out ${
           searchOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}>
           <form onSubmit={handleSearchSubmit} className="relative max-w-2xl mx-auto">
@@ -179,7 +179,7 @@ const Navbar = ({ cartCount = 0, currentUser, handleLogout, products = [], onSea
         </div>
 
         {/* Nav links */}
-        <nav className={`flex items-center gap-6 md:gap-10 text-[#1A1A1A] transition-all duration-300 ${
+        <nav className={`flex items-center gap-4 md:gap-10 text-[#1A1A1A] transition-all duration-300 ${
           searchOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'
         }`}>
 

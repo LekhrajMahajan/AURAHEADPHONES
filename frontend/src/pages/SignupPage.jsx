@@ -110,8 +110,8 @@ const SignupPage = ({ setCurrentUser }) => {
   return (
     <div className="min-h-screen bg-[#EAE8E3] flex flex-col justify-center py-12 sm:px-6 lg:px-8 animate-[fade-in_0.5s_ease-out]">
       <div className="sm:mx-auto sm:w-full sm:max-w-md flex flex-col items-center">
-        <Headphones className="w-12 h-12 text-[#1A1A1A] mb-4" strokeWidth={1.5} />
-        <h2 className="text-center text-[3.5rem] font-medium tracking-tight text-[#1A1A1A] leading-none mb-2">
+        <Headphones className="w-10 h-10 md:w-12 md:h-12 text-[#1A1A1A] mb-4" strokeWidth={1.5} />
+        <h2 className="text-center text-4xl md:text-[3.5rem] font-medium tracking-tight text-[#1A1A1A] leading-none mb-2">
           Join Aura
         </h2>
         <p className="text-center text-sm text-gray-500 uppercase tracking-widest font-semibold">
@@ -119,8 +119,8 @@ const SignupPage = ({ setCurrentUser }) => {
         </p>
       </div>
 
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-10 px-12 shadow-2xl rounded-[30px] border border-gray-100">
+      <div className="mt-8 md:mt-10 sm:mx-auto sm:w-full sm:max-w-md w-full px-4 sm:px-0">
+        <div className="bg-white py-8 px-6 md:py-10 md:px-12 shadow-2xl rounded-[20px] md:rounded-[30px] border border-gray-100">
           <form className="space-y-6" onSubmit={handleSignup}>
 
             {error && (

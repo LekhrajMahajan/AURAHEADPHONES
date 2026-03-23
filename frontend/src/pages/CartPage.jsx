@@ -34,8 +34,8 @@ const CartPage = ({ cartItems, updateQuantity, removeItem }) => {
       <div className="max-w-7xl mx-auto px-6 md:px-16">
 
         {/* Header */}
-        <div className="mb-16 md:mb-24">
-          <h1 className="text-[3.5rem] md:text-[6rem] font-medium tracking-tighter text-[#1A1A1A] leading-[0.9]">
+        <div className="mb-10 md:mb-24 mt-8 md:mt-0">
+          <h1 className="text-[3rem] md:text-[6rem] font-medium tracking-tighter text-[#1A1A1A] leading-[0.9]">
             Your<br />Cart
           </h1>
           {cartItems.length > 0 && (
@@ -72,7 +72,7 @@ const CartPage = ({ cartItems, updateQuantity, removeItem }) => {
                 return (
                   <div
                     key={itemId}
-                    className={`flex flex-col sm:flex-row items-center gap-6 bg-white p-6 rounded-[30px] shadow-sm border border-gray-100 relative transition-all duration-300 ${
+                    className={`flex flex-col sm:flex-row items-center gap-4 md:gap-6 bg-white p-4 md:p-6 rounded-[20px] md:rounded-[30px] shadow-sm border border-gray-100 relative transition-all duration-300 ${
                       isRemoving ? 'opacity-0 scale-95 translate-x-4' : 'opacity-100 scale-100'
                     }`}
                   >
@@ -86,7 +86,7 @@ const CartPage = ({ cartItems, updateQuantity, removeItem }) => {
                     </button>
 
                     {/* Product Image */}
-                    <div className="w-28 h-28 bg-[#F5F5F5] rounded-[18px] p-3 flex-shrink-0 flex items-center justify-center">
+                    <div className="w-20 h-20 md:w-28 md:h-28 bg-[#F5F5F5] rounded-[14px] md:rounded-[18px] p-2 md:p-3 flex-shrink-0 flex items-center justify-center">
                       <img
                         src={getOptimizedUrl(item.img, { width: 200 })}
                         alt={item.name}
@@ -136,8 +136,8 @@ const CartPage = ({ cartItems, updateQuantity, removeItem }) => {
 
             {/* ── Order Summary ── */}
             <div className="lg:w-1/3">
-              <div className="bg-[#1A1A1A] text-white p-8 md:p-10 rounded-[40px] shadow-2xl sticky top-32">
-                <h3 className="text-2xl font-medium mb-8">Order Summary</h3>
+              <div className="bg-[#1A1A1A] text-white p-6 md:p-10 rounded-[30px] md:rounded-[40px] shadow-2xl sticky top-24 md:top-32">
+                <h3 className="text-xl md:text-2xl font-medium mb-6 md:mb-8">Order Summary</h3>
 
                 {/* Items breakdown */}
                 <div className="flex flex-col gap-3 mb-6 max-h-48 overflow-y-auto">

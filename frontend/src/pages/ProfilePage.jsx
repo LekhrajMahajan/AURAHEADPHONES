@@ -71,7 +71,7 @@ const ProfilePage = ({ currentUser, setCurrentUser }) => {
           
           {/* Left Sidebar - Profile Summary */}
           <div className="lg:col-span-4 flex flex-col gap-6">
-            <div className="bg-[#1A1A1A] text-white p-10 rounded-[40px] shadow-2xl text-center relative overflow-hidden">
+            <div className="bg-[#1A1A1A] text-white p-6 md:p-10 rounded-[30px] md:rounded-[40px] shadow-2xl text-center relative overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-white/10 to-transparent"></div>
               
               <div className="relative w-28 h-28 mx-auto bg-white text-[#1A1A1A] rounded-full flex items-center justify-center text-4xl font-medium mb-6 shadow-xl">
@@ -102,9 +102,9 @@ const ProfilePage = ({ currentUser, setCurrentUser }) => {
 
           {/* Right Section - Edit Form */}
           <div className="lg:col-span-8">
-            <div className="bg-white p-8 md:p-12 rounded-[40px] shadow-sm border border-gray-100">
-              <div className="mb-10">
-                <h1 className="text-4xl font-medium tracking-tighter text-[#1A1A1A] mb-3">Profile Settings</h1>
+            <div className="bg-white p-6 md:p-12 rounded-[30px] md:rounded-[40px] shadow-sm border border-gray-100">
+              <div className="mb-8 md:mb-10">
+                <h1 className="text-3xl md:text-4xl font-medium tracking-tighter text-[#1A1A1A] mb-3">Profile Settings</h1>
                 <p className="text-gray-500 font-light">Update your personal details and shipping address.</p>
               </div>
 

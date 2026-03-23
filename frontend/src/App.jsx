@@ -224,12 +224,12 @@ function AppWrapper() {
       {!['/cart', '/login', '/signup', '/checkout', '/orders', '/profile'].includes(location.pathname) && (
         <button
           onClick={() => navigate('/cart')}
-          className="fixed bottom-6 right-6 md:bottom-12 md:right-12 z-40 w-14 h-14 md:w-20 md:h-20 bg-[#1A1A1A] text-white rounded-full shadow-[0_10px_40px_rgba(0,0,0,0.3)] flex items-center justify-center hover:scale-110 transition-transform duration-300"
+          className="fixed bottom-4 right-4 md:bottom-12 md:right-12 z-40 w-12 h-12 md:w-16 md:h-16 bg-[#1A1A1A] text-white rounded-full shadow-[0_10px_40px_rgba(0,0,0,0.3)] flex items-center justify-center hover:scale-110 transition-transform duration-300"
         >
           <div className="relative">
-            <ShoppingBag className="w-5 h-5 md:w-7 md:h-7" strokeWidth={1.5} />
+            <ShoppingBag className="w-5 h-5 md:w-6 md:h-6" strokeWidth={1.5} />
             {cartCount > 0 && (
-              <span className="absolute -top-1 -right-1 md:-top-2 md:-right-2 bg-white text-[#1A1A1A] text-[9px] md:text-[10px] font-bold w-4 h-4 md:w-5 md:h-5 flex items-center justify-center rounded-full shadow-sm">
+              <span className="absolute -top-1 -right-1 md:-top-1.5 md:-right-1.5 bg-white text-[#1A1A1A] text-[9px] md:text-[10px] font-bold w-4 h-4 md:w-5 md:h-5 flex items-center justify-center rounded-full shadow-sm">
                 {cartCount}
               </span>
             )}

@@ -95,7 +95,7 @@ const ProductDetailsPage = ({ currentUser, addToCart, products = [] }) => {
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 mb-24">
 
           {/* Image — eager load, already cached */}
-          <div className="lg:w-1/2 w-full aspect-square bg-[#F5F5F5] rounded-[40px] flex items-center justify-center p-12 shadow-inner relative transform-gpu">
+          <div className="lg:w-1/2 w-full aspect-square bg-[#F5F5F5] rounded-[30px] md:rounded-[40px] flex items-center justify-center p-6 md:p-12 shadow-inner relative transform-gpu">
             {product.tag && (
               <div className="absolute top-8 left-8 px-4 py-2 bg-[#1A1A1A] text-white text-xs uppercase tracking-widest font-semibold rounded-full z-10">
                 {product.tag}
@@ -111,16 +111,16 @@ const ProductDetailsPage = ({ currentUser, addToCart, products = [] }) => {
           </div>
 
           {/* Info */}
-          <div className="lg:w-1/2 flex flex-col justify-center">
-            <h1 className="text-[3rem] md:text-[4.5rem] font-medium leading-[1] text-[#1A1A1A] tracking-tight mb-4">
+          <div className="mt-8 lg:mt-0 lg:w-1/2 flex flex-col justify-center">
+            <h1 className="text-[2.5rem] md:text-[4.5rem] font-medium leading-[1] text-[#1A1A1A] tracking-tight mb-4">
               {product.name}
             </h1>
             <p className="text-gray-500 uppercase tracking-[0.2em] text-sm font-semibold mb-8">
               {product.color}
             </p>
-            <div className="text-3xl font-medium text-[#1A1A1A] mb-10">{displayPrice}</div>
+            <div className="text-2xl md:text-3xl font-medium text-[#1A1A1A] mb-8 md:mb-10">{displayPrice}</div>
 
-            <p className="text-gray-600 text-lg leading-relaxed font-light mb-12">
+            <p className="text-gray-600 text-base md:text-lg leading-relaxed font-light mb-8 md:mb-12">
               Experience studio-quality sound with the {product.name}. Engineered with custom neodymium
               drivers and precision-tuned acoustics to deliver pure resonance, deep bass, and crystal-clear
               highs. Wrapped in ultra-soft memory foam for all-day comfort.
@@ -128,7 +128,7 @@ const ProductDetailsPage = ({ currentUser, addToCart, products = [] }) => {
 
             <button
               onClick={handleAddToCart}
-              className="py-5 bg-[#1A1A1A] text-white rounded-full flex items-center justify-center gap-3 hover:bg-[#333] transition-colors text-sm font-semibold uppercase tracking-widest shadow-xl hover:scale-[1.02] active:scale-95 duration-200 transform-gpu"
+              className="py-4 md:py-5 bg-[#1A1A1A] text-white rounded-full flex items-center justify-center gap-3 hover:bg-[#333] transition-colors text-xs md:text-sm font-semibold uppercase tracking-widest shadow-xl hover:scale-[1.02] active:scale-95 duration-200 transform-gpu"
             >
               {added ? <Check className="w-5 h-5 text-green-400" /> : <ShoppingBag className="w-5 h-5" />}
               {added ? 'Added to Cart' : 'Add to Cart'}

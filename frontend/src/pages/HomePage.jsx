@@ -223,7 +223,7 @@ const HomePage = ({ products = [] }) => {
 
           <div className="w-full md:w-1/3 flex justify-center items-center relative h-[40vh] md:h-[70vh] order-1 md:order-2 mb-12 md:mb-0">
             <img ref={heroImgRef} src="image1.png" alt="Aura Pro Studio Headphones"
-              className="w-[110%] md:w-[140%] max-w-none h-auto object-contain mix-blend-multiply drop-shadow-2xl will-change-transform"
+              className="w-[90%] md:w-[140%] max-w-none h-auto object-contain mix-blend-multiply drop-shadow-2xl will-change-transform"
             />
           </div>
 
@@ -315,9 +315,9 @@ const HomePage = ({ products = [] }) => {
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-end pb-12 border-b border-[#D6D5D0] relative z-20">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-end pb-12 border-b border-[#D6D5D0] relative z-20 mt-12 md:mt-0">
             <div className="md:col-span-5">
-              <h3 className="text-3xl md:text-5xl font-medium leading-tight text-[#1A1A1A]">Invest in<br />Acoustic<br />Brilliance</h3>
+              <h3 className="text-3xl md:text-5xl font-medium leading-tight text-[#1A1A1A]">Invest in<br className="hidden md:block" />Acoustic<br className="hidden md:block" />Brilliance</h3>
             </div>
             <div className="md:col-span-7 flex justify-between text-xs md:text-sm font-semibold tracking-[0.2em] uppercase text-gray-500 w-full">
               <div>AURA AUDIO</div>
