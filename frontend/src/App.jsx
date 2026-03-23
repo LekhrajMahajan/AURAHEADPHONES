@@ -20,6 +20,16 @@ const SignupPage = lazy(() => import('./pages/SignupPage'));
 const ProductDetailsPage = lazy(() => import('./pages/ProductDetailsPage'));
 const ProfilePage = lazy(() => import('./pages/ProfilePage'));
 
+// Admin Pages
+const AdminLogin = lazy(() => import('./pages/admin/AdminLogin'));
+const AdminLayout = lazy(() => import('./pages/admin/AdminLayout'));
+const AdminDashboardHome = lazy(() => import('./pages/admin/AdminDashboardHome'));
+const AdminProducts = lazy(() => import('./pages/admin/AdminProducts'));
+const AdminOrders = lazy(() => import('./pages/admin/AdminOrders'));
+const AdminUsers = lazy(() => import('./pages/admin/AdminUsers'));
+const AdminCoupons = lazy(() => import('./pages/admin/AdminCoupons'));
+const AdminSettings = lazy(() => import('./pages/admin/AdminSettings'));
+
 const getCartKey = (userId) => `aura_cart_${userId || 'guest'}`;
 
 function AppWrapper() {
@@ -165,13 +175,15 @@ function AppWrapper() {
       className="text-[#1A1A1A] antialiased bg-[#EAE8E3] min-h-screen selection:bg-[#1A1A1A] selection:text-white overflow-x-hidden"
       style={{ fontFamily: "'Outfit', sans-serif" }}
     >
-      <Navbar
-        cartCount={cartCount}
-        currentUser={currentUser}
-        handleLogout={handleLogout}
-        products={products}
-        onSearch={handleSearch}
-      />
+      {!location.pathname.startsWith('/admin') && (
+        <Navbar
+          cartCount={cartCount}
+          currentUser={currentUser}
+          handleLogout={handleLogout}
+          products={products}
+          onSearch={handleSearch}
+        />
+      )}
 
       <main>
         <Suspense fallback={<div className="min-h-screen bg-[#EAE8E3] flex items-center justify-center"><div className="w-8 h-8 border-2 border-[#1A1A1A] border-t-transparent rounded-full animate-spin"></div></div>}>
@@ -214,14 +226,25 @@ function AppWrapper() {
             <Route path="/profile" element={<ProfilePage currentUser={currentUser} setCurrentUser={setCurrentUser} />} />
             <Route path="/login" element={<LoginPage setCurrentUser={setCurrentUser} />} />
             <Route path="/signup" element={<SignupPage setCurrentUser={setCurrentUser} />} />
+
+            {/* Admin Routes */}
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route path="dashboard" element={<AdminDashboardHome />} />
+              <Route path="products" element={<AdminProducts />} />
+              <Route path="orders" element={<AdminOrders />} />
+              <Route path="users" element={<AdminUsers />} />
+              <Route path="coupons" element={<AdminCoupons />} />
+              <Route path="settings" element={<AdminSettings />} />
+            </Route>
           </Routes>
         </Suspense>
       </main>
 
-      <Footer />
+      {!location.pathname.startsWith('/admin') && <Footer />}
 
       {/* Floating Cart Button */}
-      {!['/cart', '/login', '/signup', '/checkout', '/orders', '/profile'].includes(location.pathname) && (
+      {!['/cart', '/login', '/signup', '/checkout', '/orders', '/profile'].includes(location.pathname) && !location.pathname.startsWith('/admin') && (
         <button
           onClick={() => navigate('/cart')}
           className="fixed bottom-4 right-4 md:bottom-12 md:right-12 z-40 w-12 h-12 md:w-16 md:h-16 bg-[#1A1A1A] text-white rounded-full shadow-[0_10px_40px_rgba(0,0,0,0.3)] flex items-center justify-center hover:scale-110 transition-transform duration-300"

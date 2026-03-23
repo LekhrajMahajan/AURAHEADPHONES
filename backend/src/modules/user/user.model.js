@@ -16,6 +16,7 @@ const userSchema = new mongoose.Schema({
   city:    { type: String, default: '' },
   state:   { type: String, default: '' },
   pincode: { type: String, default: '' },
+  isBlocked: { type: Boolean, default: false },
 
 }, { timestamps: true }); 
 

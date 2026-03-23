@@ -13,6 +13,8 @@ import userRoutes from './src/modules/user/user.routes.js';
 import productRoutes from './src/modules/product/product.routes.js';
 import orderRoutes from './src/modules/order/order.routes.js';
 import aiRoutes from './src/modules/ai/ai.routes.js';
+import adminAuthRoutes from './src/modules/admin/admin.routes.js';
+import couponRoutes from './src/modules/coupon/coupon.routes.js';
 
 connectDB();
 
@@ -65,6 +67,8 @@ app.use('/api/users', apiLimiter, userRoutes);
 app.use('/api/products', apiLimiter, productRoutes);
 app.use('/api/orders', apiLimiter, orderRoutes);
 app.use('/api/ai', apiLimiter, aiRoutes);
+app.use('/api/admin/auth', apiLimiter, adminAuthRoutes);
+app.use('/api/coupons', apiLimiter, couponRoutes);
 
 // ─── 404 Handler ──────────────────────────────────────────────
 app.use((req, res) => {
