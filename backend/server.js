@@ -5,6 +5,7 @@ dotenv.config();
 import express from 'express';
 import cors from 'cors';
 import connectDB from './src/config/db.js';
+import rateLimit from 'express-rate-limit';
 
 // Routes
 import authRoutes from './src/modules/auth/auth.routes.js';
@@ -24,6 +25,15 @@ const allowedOrigins = [
   'https://auraheadphones.vercel.app',
   process.env.CLIENT_URL,
 ].filter(Boolean);
+
+// Rate Limiting
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per windowMs
+  message: { message: 'Too many requests from this IP, please try again after 15 minutes' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 app.use(cors({
   origin: function (origin, callback) {
@@ -50,11 +60,11 @@ app.get('/', (req, res) => {
 });
 
 // ─── API Routes ───────────────────────────────────────────────
-app.use('/api/auth', authRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/products', productRoutes);
-app.use('/api/orders', orderRoutes);
-app.use('/api/ai', aiRoutes);
+app.use('/api/auth', apiLimiter, authRoutes);
+app.use('/api/users', apiLimiter, userRoutes);
+app.use('/api/products', apiLimiter, productRoutes);
+app.use('/api/orders', apiLimiter, orderRoutes);
+app.use('/api/ai', apiLimiter, aiRoutes);
 
 // ─── 404 Handler ──────────────────────────────────────────────
 app.use((req, res) => {

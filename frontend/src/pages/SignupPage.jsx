@@ -72,7 +72,7 @@ const SignupPage = ({ setCurrentUser }) => {
 
             <p className="text-gray-500 text-sm font-light mb-10 leading-relaxed">
               Please check your inbox and click the verification link before logging in.
-              Check your spam folder if you don't see it.
+              Check your<b> spam folder </b>if you don't see it.
             </p>
 
             <button

@@ -2,17 +2,40 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ShoppingBag, User, LogOut, Package, Search, X } from 'lucide-react';
 
-const Navbar = ({ scrollY = 0, cartCount = 0, currentUser, handleLogout, products = [], onSearch }) => {
+const Navbar = ({ cartCount = 0, currentUser, handleLogout, products = [], onSearch }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
   const [searchOpen,  setSearchOpen]  = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
+  const [localScrollY, setLocalScrollY] = useState(0);
   const inputRef = useRef(null);
+  const requestRef = useRef(null);
 
-  const isScrolled   = scrollY > 50;
+  const isScrolled   = localScrollY > 50;
   const navLinkClass = "text-sm font-bold uppercase tracking-widest hover:text-gray-500 transition-colors flex items-center gap-2 cursor-pointer";
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (requestRef.current) return;
+      requestRef.current = requestAnimationFrame(() => {
+        setLocalScrollY(window.scrollY);
+        requestRef.current = null;
+      });
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    // Set initial scroll position
+    handleScroll();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (requestRef.current) {
+        cancelAnimationFrame(requestRef.current);
+      }
+    };
+  }, []);
 
   // Focus input when search opens
   useEffect(() => {
@@ -118,7 +141,7 @@ const Navbar = ({ scrollY = 0, cartCount = 0, currentUser, handleLogout, product
                       className="w-full flex items-center gap-4 px-6 py-4 hover:bg-[#F5F5F5] transition-colors text-left group"
                     >
                       <div className="w-12 h-12 bg-[#F5F5F5] rounded-xl flex items-center justify-center p-1.5 flex-shrink-0 group-hover:bg-white transition-colors">
-                        <img src={product.img?.startsWith('http') ? product.img : `/${product.img}`} alt={product.name} className="w-full h-full object-cover mix-blend-multiply" />
+                        <img src={product.img?.trim().startsWith('http') ? product.img.trim() : `/${product.img?.trim()}`} alt={product.name} className="w-full h-full object-cover mix-blend-multiply" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-semibold text-[#1A1A1A] truncate">{product.name}</p>

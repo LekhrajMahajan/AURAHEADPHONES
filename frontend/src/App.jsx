@@ -28,14 +28,12 @@ function AppWrapper() {
   useScrollSmoother();
 
   const [cartItems, setCartItems] = useState([]);
-  const [navbarScrollY, setNavbarScrollY] = useState(0);
   const [currentUser, setCurrentUser] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
   const [products, setProducts] = useState(STATIC_PRODUCTS);
   const [productsLoaded, setProductsLoaded] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const scrollYRef = useRef(0);
   const cartKeyRef = useRef(getCartKey(null));
 
   useEffect(() => {
@@ -50,7 +48,7 @@ function AppWrapper() {
     products.forEach(product => {
       if (product.img) {
         const img = new Image();
-        img.src = `/${product.img}`;
+        img.src = product.img.trim().startsWith('http') ? product.img.trim() : `/${product.img.trim()}`;
       }
     });
   }, [products]);
@@ -153,22 +151,6 @@ function AppWrapper() {
     window.scrollTo({ top: 0, behavior: 'auto' });
   }, [location.pathname]);
 
-  useEffect(() => {
-    let rafId;
-    const handleScroll = () => {
-      const y = window.scrollY;
-      if (Math.abs(y - scrollYRef.current) > 5) {
-        scrollYRef.current = y;
-        rafId = requestAnimationFrame(() => setNavbarScrollY(y));
-      }
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      if (rafId) cancelAnimationFrame(rafId);
-    };
-  }, []);
-
   if (authLoading) {
     return (
       <div className="min-h-screen bg-[#EAE8E3] flex items-center justify-center">
@@ -183,7 +165,6 @@ function AppWrapper() {
       style={{ fontFamily: "'Outfit', sans-serif" }}
     >
       <Navbar
-        scrollY={navbarScrollY}
         cartCount={cartCount}
         currentUser={currentUser}
         handleLogout={handleLogout}

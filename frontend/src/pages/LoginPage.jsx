@@ -221,12 +221,12 @@ const LoginPage = ({ setCurrentUser }) => {
           </form>
 
           <div className="mt-8 text-center">
-            <p className="text-sm text-gray-600">
-              Don't have an account?{' '}
-              <Link to="/signup" className="font-semibold text-[#1A1A1A] hover:opacity-70">
-                Signup here
-              </Link>
+            <p className="text-sm text-gray-600 mb-3">
+              Don't have an account?
             </p>
+            <Link to="/signup" className="inline-block px-8 py-3 rounded-full border border-gray-200 text-sm font-semibold uppercase tracking-widest text-[#1A1A1A] hover:bg-gray-50 transition-colors">
+              Create an Account
+            </Link>
           </div>
         </div>
       </div>

@@ -138,7 +138,7 @@ const HomePage = ({ products = [] }) => {
         if (heroTextRRef.current) {
           heroTextRRef.current.style.transform = `translateY(${y * -0.05}px)`;
         }
-        if (parallaxImgRef.current) {
+        if (parallaxImgRef.current && window.innerWidth >= 768) {
           parallaxImgRef.current.style.transform = `translateY(${(y - 1500) * 0.15}px)`;
         }
       });
@@ -304,18 +304,18 @@ const HomePage = ({ products = [] }) => {
             </h2>
           </div>
 
-          <div className="relative w-full flex justify-center mt-0 md:-mt-[10%] mb-20 md:mb-32 z-10 pointer-events-none">
+          <div className="relative w-full flex justify-center mt-6 md:-mt-[10%] mb-12 md:mb-32 z-10 pointer-events-none px-4 md:px-0">
             <img
               ref={parallaxImgRef}
               src="image8.jpg"
               alt="Aura Headphones Front View"
               loading="lazy"
               decoding="async"
-              className="w-[120%] md:w-[90%] max-w-4xl h-auto object-cover rounded-[30px] md:rounded-[50px] mix-blend-multiply will-change-transform"
+              className="w-full md:w-[90%] max-w-4xl h-auto object-cover rounded-[30px] md:rounded-[50px] mix-blend-multiply md:will-change-transform"
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-end pb-12 border-b border-[#D6D5D0]">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-end pb-12 border-b border-[#D6D5D0] relative z-20">
             <div className="md:col-span-5">
               <h3 className="text-3xl md:text-5xl font-medium leading-tight text-[#1A1A1A]">Invest in<br />Acoustic<br />Brilliance</h3>
             </div>
