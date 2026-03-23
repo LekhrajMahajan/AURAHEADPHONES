@@ -18,9 +18,32 @@ const AdminProducts = () => {
     fetchProducts();
   }, []);
 
+  const handleOpenModal = (product = null) => {
+    if (product) {
+      setEditingProduct(product);
+      setFormData({
+        name: product.name || '',
+        color: product.color || '',
+        price: product.price || '',
+        discount: product.discount || '',
+        tag: product.tag || '',
+        category: product.category || 'Headphones',
+        stock: product.stock || '',
+        img: product.img || '',
+        images: product.images || []
+      });
+    } else {
+      setEditingProduct(null);
+      setFormData({
+        name: '', color: '', price: '', discount: '', tag: '', category: 'Headphones', stock: '', img: '', images: []
+      });
+    }
+    setIsModalOpen(true);
+  };
+
   const fetchProducts = async () => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/products`);
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/products`);
       const data = await res.json();
       setProducts(data);
     } catch (err) {
@@ -35,7 +58,7 @@ const AdminProducts = () => {
     
     try {
       const token = localStorage.getItem('adminToken');
-      await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/products/${id}`, {
+      await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/products/${id}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -69,11 +92,14 @@ const AdminProducts = () => {
         }
       }
 
-      setFormData(prev => ({
-        ...prev,
-        img: prev.img || uploadedUrls[0], // Set main image if empty
-        images: [...prev.images, ...uploadedUrls]
-      }));
+      setFormData(prev => {
+        const newImages = [...prev.images, ...uploadedUrls];
+        return {
+          ...prev,
+          img: prev.img || uploadedUrls[0], // Set main image if empty
+          images: newImages
+        };
+      });
     } catch (err) {
       console.error('Failed to upload image:', err);
       alert('Image upload failed. Please ensure Cloudinary URL/Preset is configured in .env');
@@ -83,18 +109,27 @@ const AdminProducts = () => {
   };
 
   const removeImage = (indexToRemove) => {
-    setFormData(prev => ({
-      ...prev,
-      images: prev.images.filter((_, i) => i !== indexToRemove),
-      img: prev.img === prev.images[indexToRemove] ? (prev.images.find((_, i) => i !== indexToRemove) || '') : prev.img
-    }));
+    setFormData(prev => {
+      const newImages = prev.images.filter((_, i) => i !== indexToRemove);
+      let newMainImg = prev.img;
+      if (prev.img === prev.images[indexToRemove]) {
+        newMainImg = newImages[0] || '';
+      }
+      return {
+        ...prev,
+        images: newImages,
+        img: newMainImg
+      };
+    });
   };
 
   const handleSave = async (e) => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('adminToken');
-      const url = `${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/products${editingProduct ? `/${editingProduct._id}` : ''}`;
+      // Ensure VITE_API_URL fallback includes /api
+      const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+      const url = `${baseUrl}/products${editingProduct ? `/${editingProduct._id}` : ''}`;
       const method = editingProduct ? 'PUT' : 'POST';
 
       const res = await fetch(url, {

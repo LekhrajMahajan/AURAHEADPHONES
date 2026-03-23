@@ -86,7 +86,7 @@ const AdminLayout = () => {
       </aside>
 
       {/* Main Content View */}
-      <main className="flex-1 h-full overflow-y-auto w-full">
+      <main className="flex-1 h-full overflow-y-auto w-full min-h-0" data-lenis-prevent>
         <div className="p-8">
           <Outlet />
         </div>
