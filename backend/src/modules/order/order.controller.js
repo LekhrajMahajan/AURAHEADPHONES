@@ -14,9 +14,9 @@ export const createOrder = async (req, res) => {
 
     const cleanItems = items.map(item => {
       const cleanItem = {
-        name:     item.name,
-        img:      item.img || '',
-        price:    item.price,
+        name: item.name,
+        img: item.img || '',
+        price: item.price,
         quantity: item.quantity || 1,
       };
       if (item.product && String(item.product).length === 24) {
@@ -26,10 +26,10 @@ export const createOrder = async (req, res) => {
     });
 
     const order = await Order.create({
-      user:            req.user._id,
-      items:           cleanItems,
-      total:           Math.round(total),
-      paymentMethod:   paymentMethod || 'card',
+      user: req.user._id,
+      items: cleanItems,
+      total: Math.round(total),
+      paymentMethod: paymentMethod || 'card',
       shippingAddress: shippingAddress || {},
     });
 
@@ -42,11 +42,10 @@ export const createOrder = async (req, res) => {
 };
 
 // ─── GET /api/orders/myorders ─────────────────────────────────
-// Logged in user ke saare orders — latest pehle
 export const getMyOrders = async (req, res) => {
   try {
     const orders = await Order.find({ user: req.user._id })
-      .sort({ createdAt: -1 }); // Latest order pehle
+      .sort({ createdAt: -1 });
 
     res.status(200).json(orders);
   } catch (error) {

@@ -4,7 +4,7 @@ const BASE = import.meta.env.VITE_API_URL || 'https://auraheadphones.onrender.co
 
 const waitForAuthUser = () => {
   return new Promise((resolve, reject) => {
-    // Already available hai
+    // User is already signed in — resolve immediately
     if (auth.currentUser) {
       resolve(auth.currentUser);
       return;

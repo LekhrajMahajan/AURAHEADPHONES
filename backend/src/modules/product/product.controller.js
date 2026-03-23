@@ -11,13 +11,11 @@ const redisClient = createClient({
 
 redisClient.on('error', (err) => {
   if (err.code === 'ENOTFOUND' || err.code === 'ECONNREFUSED') {
-    // Only log once or just keep it quiet to avoid spamming the console
   } else {
     console.error('Redis Client Error:', err);
   }
 });
 
-// Connect to Redis (Runs asynchronously in the background)
 redisClient.connect().catch((err) => {
   console.warn(`Could not connect to Redis (${err.message}), caching is disabled.`);
 });
@@ -26,7 +24,6 @@ redisClient.connect().catch((err) => {
 // ─── GET /api/products ────────────────────────────────────────
 export const getProducts = async (req, res) => {
   try {
-    // 1. Check if products exist in Redis cache
     if (redisClient.isReady) {
       const cachedProducts = await redisClient.get('all_products');
 
@@ -35,12 +32,9 @@ export const getProducts = async (req, res) => {
         return res.status(200).json(JSON.parse(cachedProducts));
       }
     }
-
-    // 2. If not in cache, fetch from MongoDB
     console.log('Fetching products from MongoDB 🗄️');
     const products = await Product.find({}).sort({ createdAt: -1 });
 
-    // 3. Save the result to Redis cache for 1 hour (3600 seconds)
     if (redisClient.isReady) {
       await redisClient.setEx('all_products', 3600, JSON.stringify(products));
     }
@@ -57,7 +51,6 @@ export const getProductById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    // 1. Check if the specific product exists in Redis cache
     if (redisClient.isReady) {
       const cachedProduct = await redisClient.get(`product_${id}`);
 
@@ -67,7 +60,6 @@ export const getProductById = async (req, res) => {
       }
     }
 
-    // 2. If not in cache, fetch from MongoDB
     console.log(`Fetching product ${id} from MongoDB 🗄️`);
     const product = await Product.findById(id);
 
@@ -75,7 +67,6 @@ export const getProductById = async (req, res) => {
       return res.status(404).json({ message: 'Product not found' });
     }
 
-    // 3. Save the specific product to Redis cache for 1 hour
     if (redisClient.isReady) {
       await redisClient.setEx(`product_${id}`, 3600, JSON.stringify(product));
     }

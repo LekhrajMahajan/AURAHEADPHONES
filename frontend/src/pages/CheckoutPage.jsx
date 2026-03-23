@@ -276,7 +276,7 @@ const CheckoutPage = ({ cartItems, onOrderComplete }) => {
                           setCardErrors(prev => ({ ...prev, number: '' }));
                         }}
                         placeholder="1234 5678 9012 3456"
-                        maxLength={19} // 16 digits + 3 spaces
+                        maxLength={19}
                         className={`w-full border-b py-3 outline-none transition-colors font-mono tracking-widest text-sm pr-16 ${
                           cardErrors.number ? 'border-red-400' : 'border-gray-200 focus:border-[#1A1A1A]'
                         }`}
@@ -311,7 +311,7 @@ const CheckoutPage = ({ cartItems, onOrderComplete }) => {
                           setCardErrors(prev => ({ ...prev, expiry: '' }));
                         }}
                         placeholder="MM/YY"
-                        maxLength={5} // MM/YY = 5 chars
+                        maxLength={5}
                         className={`w-full border-b py-3 outline-none transition-colors font-mono tracking-widest text-sm text-center ${
                           cardErrors.expiry ? 'border-red-400' : 'border-gray-200 focus:border-[#1A1A1A]'
                         }`}
@@ -325,7 +325,7 @@ const CheckoutPage = ({ cartItems, onOrderComplete }) => {
                         CVV <Lock className="w-3 h-3 text-gray-400" />
                       </label>
                       <input
-                        type="password" // Hidden for security
+                        type="password"
                         inputMode="numeric"
                         value={cardCVV}
                         onChange={(e) => {
@@ -333,7 +333,7 @@ const CheckoutPage = ({ cartItems, onOrderComplete }) => {
                           setCardErrors(prev => ({ ...prev, cvv: '' }));
                         }}
                         placeholder="•••"
-                        maxLength={3} // Exactly 3 digits
+                        maxLength={3}
                         className={`w-full border-b py-3 outline-none transition-colors font-mono tracking-[0.4em] text-sm text-center ${
                           cardErrors.cvv ? 'border-red-400' : 'border-gray-200 focus:border-[#1A1A1A]'
                         }`}
