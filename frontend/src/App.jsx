@@ -229,6 +229,7 @@ function AppWrapper() {
 
             {/* Admin Routes */}
             <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/login/admin" element={<AdminLogin />} />
             <Route path="/admin" element={<AdminLayout />}>
               <Route path="dashboard" element={<AdminDashboardHome />} />
               <Route path="products" element={<AdminProducts />} />
