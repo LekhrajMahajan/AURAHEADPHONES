@@ -9,5 +9,3 @@ router.put('/update', protectAdmin, updateAdminCredentials);
 
 export default router;
 
-//admin@aura.com
-//admin123
