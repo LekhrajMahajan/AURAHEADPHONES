@@ -67,12 +67,12 @@ app.get('/', (req, res) => {
 });
 
 // ─── API Routes ───────────────────────────────────────────────
+app.use('/api/admin/auth', apiLimiter, adminAuthRoutes);
 app.use('/api/auth', apiLimiter, authRoutes);
 app.use('/api/users', apiLimiter, userRoutes);
 app.use('/api/products', apiLimiter, productRoutes);
 app.use('/api/orders', apiLimiter, orderRoutes);
 app.use('/api/ai', apiLimiter, aiRoutes);
-app.use('/api/admin/auth', apiLimiter, adminAuthRoutes);
 app.use('/api/coupons', apiLimiter, couponRoutes);
 
 // ─── 404 Handler ──────────────────────────────────────────────
