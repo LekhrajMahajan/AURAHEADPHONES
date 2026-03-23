@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { X, Minus, Plus, ArrowRight, ShoppingBag, Trash2 } from 'lucide-react';
 import useScrollSmoother from '../utils/useScrollSmoother';
+import { getOptimizedUrl } from '../utils/cloudinary';
 
 // Convert the price to a consistent Indian format.
 const toNumber = (price) => {
@@ -87,8 +88,10 @@ const CartPage = ({ cartItems, updateQuantity, removeItem }) => {
                     {/* Product Image */}
                     <div className="w-28 h-28 bg-[#F5F5F5] rounded-[18px] p-3 flex-shrink-0 flex items-center justify-center">
                       <img
-                        src={item.img?.trim().startsWith('http') ? item.img.trim() : `/${item.img?.trim()}`}
+                        src={getOptimizedUrl(item.img, { width: 200 })}
                         alt={item.name}
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover mix-blend-multiply"
                       />
                     </div>

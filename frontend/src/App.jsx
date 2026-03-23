@@ -6,6 +6,7 @@ import { auth } from './config/firebase';
 import { syncUserWithBackend, fetchProducts } from './services/api';
 import { PRODUCTS as STATIC_PRODUCTS } from './utils/data';
 import useScrollSmoother from './utils/useScrollSmoother';
+import { getOptimizedUrl } from './utils/cloudinary';
 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -48,7 +49,7 @@ function AppWrapper() {
     products.forEach(product => {
       if (product.img) {
         const img = new Image();
-        img.src = product.img.trim().startsWith('http') ? product.img.trim() : `/${product.img.trim()}`;
+        img.src = getOptimizedUrl(product.img, { width: 600 });
       }
     });
   }, [products]);

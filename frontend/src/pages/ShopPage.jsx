@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ShoppingBag, Check } from 'lucide-react';
 import ToastNotification from '../components/ToastNotification';
+import { getOptimizedUrl } from '../utils/cloudinary';
 
 const ShopPage = ({ currentUser, addToCart, products = [], searchQuery = '' }) => {
   const navigate = useNavigate();
@@ -65,9 +66,10 @@ const ShopPage = ({ currentUser, addToCart, products = [], searchQuery = '' }) =
                       </span>
                     )}
                     <img
-                      src={product.img?.trim().startsWith('http') ? product.img.trim() : `/${product.img?.trim()}`}
+                      src={getOptimizedUrl(product.img, { width: 600 })}
                       alt={product.name}
                       loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover mix-blend-multiply group-hover:scale-110 transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)]"
                     />
                   </div>

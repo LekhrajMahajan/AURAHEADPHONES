@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ShoppingBag, User, LogOut, Package, Search, X } from 'lucide-react';
+import { getOptimizedUrl } from '../utils/cloudinary';
 
 const Navbar = ({ cartCount = 0, currentUser, handleLogout, products = [], onSearch }) => {
   const location = useLocation();
@@ -141,7 +142,7 @@ const Navbar = ({ cartCount = 0, currentUser, handleLogout, products = [], onSea
                       className="w-full flex items-center gap-4 px-6 py-4 hover:bg-[#F5F5F5] transition-colors text-left group"
                     >
                       <div className="w-12 h-12 bg-[#F5F5F5] rounded-xl flex items-center justify-center p-1.5 flex-shrink-0 group-hover:bg-white transition-colors">
-                        <img src={product.img?.trim().startsWith('http') ? product.img.trim() : `/${product.img?.trim()}`} alt={product.name} className="w-full h-full object-cover mix-blend-multiply" />
+                        <img src={getOptimizedUrl(product.img, { width: 100 })} alt={product.name} loading="lazy" decoding="async" className="w-full h-full object-cover mix-blend-multiply" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-semibold text-[#1A1A1A] truncate">{product.name}</p>

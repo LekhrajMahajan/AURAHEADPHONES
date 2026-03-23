@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ShoppingBag, Star, ArrowLeft, Check } from 'lucide-react';
 import useScrollSmoother from '../utils/useScrollSmoother';
 import ToastNotification from '../components/ToastNotification';
+import { getOptimizedUrl } from '../utils/cloudinary';
 
 const ProductDetailsPage = ({ currentUser, addToCart, products = [] }) => {
   const { id } = useParams();
@@ -101,7 +102,7 @@ const ProductDetailsPage = ({ currentUser, addToCart, products = [] }) => {
               </div>
             )}
             <img
-              src={product.img?.trim().startsWith('http') ? product.img.trim() : `/${product.img?.trim()}`}
+              src={getOptimizedUrl(product.img, { width: 1200 })}
               alt={product.name}
               loading="eager"
               decoding="sync"
