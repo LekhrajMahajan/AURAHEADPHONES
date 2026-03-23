@@ -63,10 +63,13 @@ app.use((req, res, next) => {
 
 // ─── Health Check ─────────────────────────────────────────────
 app.get('/', (req, res) => {
-  res.json({ status: 'ok', message: 'AURA Backend Running ✅' });
+  res.json({ status: 'ok', message: 'AURA Backend Running' });
 });
 
 // ─── API Routes ───────────────────────────────────────────────
+import { authAdmin } from './src/modules/admin/admin.controller.js';
+app.post('/api/admin/auth/login', apiLimiter, authAdmin);
+
 app.use('/api/admin/auth', apiLimiter, adminAuthRoutes);
 app.use('/api/auth', apiLimiter, authRoutes);
 app.use('/api/users', apiLimiter, userRoutes);
