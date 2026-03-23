@@ -14,6 +14,20 @@ export const authAdmin = async (req, res) => {
   try {
     const { email, password } = req.body;
     
+    // Check if initial admin needs to be created (using unique secure keys)
+    const adminCount = await Admin.countDocuments();
+    if (adminCount === 0) {
+      if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
+        const admin = await Admin.create({ email, password, role: 'superadmin' });
+        return res.json({
+          _id: admin._id,
+          email: admin.email,
+          role: admin.role,
+          token: generateToken(admin._id, admin.role),
+        });
+      }
+    }
+
     const admin = await Admin.findOne({ email });
 
     if (admin && (await admin.matchPassword(password))) {
